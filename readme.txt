@@ -4,7 +4,8 @@
 
 **********************************
 
-	by Jordan Balk Schaer
+	reengineed by Integral Team
+	started by Jordan Balk Schaer
 
 BASHGAMMON is a Python/text version of the classic game Backgammon.  It is played with the rules that I know.  
 There are two teams, represented as X and O.  O starts in the upper right side and X starts in the lower right.  X wants to move to its home board in the upper right and O wants to move to its home board in the lower right.  
@@ -36,7 +37,7 @@ You can type 1,6 or 1 6 but you cannot type 16, the computer won't know what you
 You can undo one move by typing "u" or "undo" but you cannot undo more than the previous move.
 You can finish your turn if you type "f" or "finish" or "d" or "done".  Your turn will finish automatically if you run out of moves.
 
-Currently, you can only play player vs. player.  An update will come that will allow player vs. computer or even computer vs. computer if you're into that sort of thing.
+Currently, you can only play computer vs. computer 
 
 Have fun!
 
