@@ -37,17 +37,21 @@ class Board:
         lines = self.__repr__().split('\n')
 #         lines = self.strView.split('\n')
         max_count = 0
-        font = ifont.truetype("couriernew.ttf",20)
-        lines = lines[1:-1]
+        #font = ifont.truetype("couriernew.ttf",20)
+        font = ifont.truetype("CourierNew-B.ttf", 20)
+        lines = lines[2:-2]
         for l in lines:
             max_count = max(len(l), max_count)
-        img = Image.new("L", (max_count*15, (len(lines)-1)*40), 255)
+        img = Image.new("L", (max_count*14, (len(lines)-1)*20), 255)
         pix = img.load()
         paint = draw.Draw(img)
         for i,l in enumerate(lines):
             paint.text(( 0, 20*i), l, font=font)
-        img = img.resize((500,500))
-#         img = img.resize((430,250))
+        if img.size[0] > img.size[1]:
+            img = img.resize((img.size[0],img.size[0]))
+        else:
+            img = img.resize((img.size[1], img.size[1]))
+        img = img.resize((512,512))
         img.save(os.path.join(folder, str(step_i) + ".png"))
         return
 
@@ -613,8 +617,8 @@ for igame in range(200):
     df = pd.DataFrame( [i['hist_state']+i['hist_move']+[i['available_moves']] for i in MOVES_HISTORY] , columns = header )
     df.to_csv(filename, index=False)
     
-    if igame>3:
-        break
+    #if igame>3:
+    #    break
         
 df_wins=pd.DataFrame( wins )
 df_wins.columns = ['game', 'winner']
