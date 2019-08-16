@@ -37,7 +37,7 @@ def test(dataset):
                         acc_val += (label_batch - out)
                         if index % acc_epoch == 0:
                             print("Loss", acc_val / acc_epoch)
-                            loss_val = 0.0
+                            acc_val = 0.0
     return
 
 dataset_ = Dataset("data",256,128)
