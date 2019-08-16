@@ -4,6 +4,8 @@ from PIL import Image
 from PIL import ImageDraw as draw
 from PIL import ImageFont as ifont
 
+import ImageGenerator as IG
+
 class Board:
 #     strView = ''
     def __init__(self):
@@ -25,7 +27,12 @@ class Board:
         self.oJail = 0
         self.xHome = 5
         self.oHome = 5
-        
+
+        self.alfabet = IG.load_alfabet()
+        self.alfabet_images = {}
+        for a in self.alfabet:
+            self.alfabet_images[a] = Image.open(self.alfabet[a][1], 'r')
+
         self.mapping_side = {
             False: -1,
             True: 1
@@ -35,23 +42,22 @@ class Board:
         
     def toImage(self, step_i, folder='.'):
         lines = self.__repr__().split('\n')
-#         lines = self.strView.split('\n')
         max_count = 0
-        #font = ifont.truetype("couriernew.ttf",20)
-        font = ifont.truetype("CourierNew-B.ttf", 20)
-        lines = lines[2:-2]
+        lines = lines[2:-3]
+
         for l in lines:
             max_count = max(len(l), max_count)
-        img = Image.new("L", (max_count*14, (len(lines)-1)*20), 255)
-        pix = img.load()
-        paint = draw.Draw(img)
-        for i,l in enumerate(lines):
-            paint.text(( 0, 20*i), l, font=font)
-        if img.size[0] > img.size[1]:
-            img = img.resize((img.size[0],img.size[0]))
-        else:
-            img = img.resize((img.size[1], img.size[1]))
-        img = img.resize((512,512))
+        w, h = IG.get_image_size(max_count, len(lines))
+        img = Image.new("L", (w, h), 255)
+        w_step, h_step = IG.get_subimage_step()
+        h_i = 0
+        for l in lines:
+            w_i = 0
+            fill_l = l if len(l) == max_count else l + " " * (max_count - len(l))
+            for s in fill_l:
+                img.paste(self.alfabet_images[s], (w_i, h_i))
+                w_i += w_step
+            h_i += h_step
         img.save(os.path.join(folder, str(step_i) + ".png"))
         return
 
