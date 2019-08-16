@@ -1,6 +1,6 @@
 import os
 import shutil
-import cv2 as cv
+#import cv2 as cv
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
@@ -11,17 +11,17 @@ alfabet_all = "-|0123456789 qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM
 labels_all = {"X":128, "O":255}
 
 def create_subimage(sym, name):
-    font = ImageFont.truetype("CourierNew-B.ttf", size)
+    font = ImageFont.truetype("fonts/CourierNew-B.ttf", size)
     img = Image.new("L", (width, height), 255)
     draw = ImageDraw.Draw(img)
     draw.text((0,0), sym,font=font)
     img = img.resize((width, int(height*1.5)))
-    img.save("SubImage/"+name+".png")
+    img.save("fonts/"+name+".png")
     return
 
 def create_alfabet():
-    if not os.path.exists("SubImage"):
-        os.mkdir("SubImage")
+    if not os.path.exists("fonts"):
+        os.mkdir("fonts")
     for i,s in enumerate(alfabet_all):
         create_subimage(s, str(i))
     return
@@ -29,7 +29,7 @@ def create_alfabet():
 def load_alfabet():
     a = {}
     for i,s in enumerate(alfabet_all):
-        a[s] = ( i ,"SubImage/" + str(i) + ".png")
+        a[s] = ( i ,"fonts/" + str(i) + ".png")
     return a
 
 def get_image_size(w_c, h_c):

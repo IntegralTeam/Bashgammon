@@ -38,11 +38,15 @@ You can undo one move by typing "u" or "undo" but you cannot undo more than the 
 You can finish your turn if you type "f" or "finish" or "d" or "done".  Your turn will finish automatically if you run out of moves.
 
 Currently, the available game types are :
-'pvp': person Vs. person, 
-'pvr': person Vs. weak,
-'pvq': person Vs. medium , 
-'rvr': weak Vs. weak 
-'qvr': medium Vs. weak 
+- 'pvp': person Vs. person 
+- 'pvr': person Vs. weak
+- 'pvq': person Vs. medium  
+- 'pvd': person Vs. hard 
+- 'pvc': person Vs. nightmare 
+- 'rvr': weak Vs. weak 
+- 'qvr': medium Vs. weak 
+- 'dvr': hard Vs. weak 
+- 'cvr': nightmare Vs. weak 
 
 Have fun!
 

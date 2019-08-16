@@ -10,7 +10,7 @@ from model import CNN
 from dataset import Dataset
 
 BATCH = 3
-model_save_path = "cnn_model"
+model_save_path = "models"
 model_name = "model_n0.pt"
 
 

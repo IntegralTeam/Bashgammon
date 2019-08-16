@@ -9,7 +9,7 @@ import torch.optim as optim
 from model import CNN
 from dataset import Dataset
 
-model_save_path = "cnn_model"
+model_save_path = "models"
 model_name = "model_n0.pt"
 BATCH = 2
 
