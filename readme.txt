@@ -37,7 +37,12 @@ You can type 1,6 or 1 6 but you cannot type 16, the computer won't know what you
 You can undo one move by typing "u" or "undo" but you cannot undo more than the previous move.
 You can finish your turn if you type "f" or "finish" or "d" or "done".  Your turn will finish automatically if you run out of moves.
 
-Currently, you can only play computer vs. computer 
+Currently, the available game types are :
+'pvp': person Vs. person, 
+'pvr': person Vs. weak,
+'pvq': person Vs. medium , 
+'rvr': weak Vs. weak 
+'qvr': medium Vs. weak 
 
 Have fun!
 
