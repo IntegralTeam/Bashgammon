@@ -12,6 +12,7 @@ If a piece is alone, the opposing team can jump it and send it to jail.  If a pi
 The team that gets all of its pieces off of the board first wins.
 
 ## How-to Play
+- launch _backgammon.py_
 Type in two numbers, the first number is the position of the piece you want to move, and the second is the number of spots you want to move it by; for example, if you were O and you typed (1,6) you would move a piece at position 1 6 spots.
 You can type 1,6 or 1 6 but you cannot type 16, the computer won't know what you mean by that.
 You can undo one move by typing "u" or "undo" but you cannot undo more than the previous move.
