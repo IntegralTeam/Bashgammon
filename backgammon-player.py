@@ -25,7 +25,8 @@ from board import Board
 
 # Load models
 
-MODEL_CNN_PATH = os.path.join('models','model_n0.pt')
+# MODEL_CNN_PATH = os.path.join('models','model_n0.pt')
+MODEL_CNN_PATH = os.path.join('models','model_n1.pt')
 MODEL_QLEARN_PATH = os.path.join('models','model_q1.pkl')
 
 IG.create_alfabet()
@@ -146,16 +147,52 @@ def main(gameNumber=0, VERBOSE = True, SAVE_IMG = False, GAME_TYPE=None, QLEARN 
                             np_img[0,0] = np.array( b.toImage(step_i=0, save=False).resize((256,128))).transpose((1,0))
                             _image = torch.tensor(np_img).float().to(device)
 
-                            res_tesnors = []
-                            for step in _steps:
-                                step = torch.tensor([step]).float().to(device)
-                                res_tesnors.append( cnn(_image, step) )
+                            res_tensors = []
+                            _steps = np.array(_steps)
+                            dice_val = np.unique(_steps[:,1])
+                            for step in dice_val:
+                                _step = torch.tensor([[step]]).float().to(device)
+                                res_tensors.append( cnn(_image, _step) )
 
-                            availableMoves = [[m[0],m[1],m[2],1-score.item()] for m, score in zip(availableMoves, res_tesnors)]
-                            availableMoves = b.filter_best_moves(availableMoves)    
+                            avalible_pos = []
+                            _dict = {}
+                            for dice in dice_val:
+                                _dict[dice] = []   
+
+                            for s in _steps:
+                                _dict[s[1]].append( 
+                                    [ res_tensors[ np.where(dice_val == s[1])[0][0] ][0][s[0]].item() , s[0]] 
+                                )
+                            _dict
+                            best_score = -10000.0
+                            pair = (0,0)
+                            for key in _dict:
+                                value = _dict[key]
+                                for _v in value:
+                                    if best_score < _v[0]:
+                                        best_score = _v[0]
+                                        pair = (_v[1], key)
                             
-                            chosenMove = random.sample(availableMoves, 1)[0]
-                            line = str(chosenMove[0]+1)+', '+ str(chosenMove[2])                            
+                            line = str(pair[0]+1)+', '+ str(pair[1])   
+                            
+                            # code for old version CNN                            
+#                             _steps = [[m[0],m[2]] for m in availableMoves]
+
+#                             np_img = np.ndarray(shape=(1,1,256,128))
+#                             np_img[0,0] = np.array( b.toImage(step_i=0, save=False).resize((256,128))).transpose((1,0))
+#                             _image = torch.tensor(np_img).float().to(device)
+
+#                             res_tesnors = []
+#                             for step in _steps:
+#                                 step = torch.tensor([step]).float().to(device)
+#                                 res_tesnors.append( cnn(_image, step) )
+
+#                             availableMoves = [[m[0],m[1],m[2],score.item()] for m, score in zip(availableMoves, res_tesnors)]
+#                             availableMoves = b.filter_best_moves(availableMoves)    
+                            
+#                             chosenMove = random.sample(availableMoves, 1)[0]
+#                             line = str(chosenMove[0]+1)+', '+ str(chosenMove[2]) 
+
                         else:
                             line = 'f'
                     else:
@@ -188,21 +225,38 @@ def main(gameNumber=0, VERBOSE = True, SAVE_IMG = False, GAME_TYPE=None, QLEARN 
                     elif player_O == 'cnn':                        
                         if len(availableMoves) > 0:
                             _steps = [[m[0],m[2]] for m in availableMoves]
-
+                                
                             np_img = np.ndarray(shape=(1,1,256,128))
                             np_img[0,0] = np.array( b.toImage(step_i=0, save=False).resize((256,128))).transpose((1,0))
                             _image = torch.tensor(np_img).float().to(device)
 
-                            res_tesnors = []
-                            for step in _steps:
-                                step = torch.tensor([step]).float().to(device)
-                                res_tesnors.append( cnn(_image, step) )
+                            res_tensors = []
+                            _steps = np.array(_steps)
+                            dice_val = np.unique(_steps[:,1])
+                            for step in dice_val:
+                                _step = torch.tensor([[step]]).float().to(device)
+                                res_tensors.append( cnn(_image, _step) )
 
-                            availableMoves = [[m[0],m[1],m[2],score.item()] for m, score in zip(availableMoves, res_tesnors)]
-                            availableMoves = b.filter_best_moves(availableMoves)    
+                            avalible_pos = []
+                            _dict = {}
+                            for dice in dice_val:
+                                _dict[dice] = []   
+
+                            for s in _steps:
+                                _dict[s[1]].append( 
+                                    [ res_tensors[ np.where(dice_val == s[1])[0][0] ][0][s[0]].item() , s[0]] 
+                                )
+                            best_score = -10000.0
+                            pair = (0,0)
+                            for key in _dict:
+                                value = _dict[key]
+                                for _v in value:
+                                    if best_score < _v[0]:
+                                        best_score = _v[0]
+                                        pair = (_v[1], key)
                             
-                            chosenMove = random.sample(availableMoves, 1)[0]
-                            line = str(chosenMove[0]+1)+', '+ str(chosenMove[2])                            
+                            line = str(pair[0]+1)+', '+ str(pair[1])     
+                           
                         else:
                             line = 'f'
                     else:
@@ -271,8 +325,7 @@ def main(gameNumber=0, VERBOSE = True, SAVE_IMG = False, GAME_TYPE=None, QLEARN 
                         print(b)
                                     
                     MOVES_HISTORY.append({'hist_state':hist_state, 'hist_move':hist_move, 'available_moves':availableMoves})
-                        
-                    
+                                            
                     if SAVE_IMG:
                         b.toImage(iMove, CURRENT_FOLDER, save=True)
                     iMove+=1  
