@@ -56,7 +56,7 @@ class Dataset():
         return
 
     # Get data in right and normalized format
-    def __get_all_steps(ls, chosed_step, chosed_pos, game_result):
+    def __get_all_steps(self, ls, chosed_step, chosed_pos, game_result):
         ls[:, 0] += 1
         chosed_pos += 1
         d = {}

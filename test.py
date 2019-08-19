@@ -44,7 +44,7 @@ def test(dataset):
                     acc_val += 1 - F.mse_loss(out, label_batch)
                     index += 1
                     if index % acc_epoch == 0:
-                        print("Acc", acc_val / acc_epoch)
+                        print("Accurancy", acc_val / acc_epoch)
                         acc_val = 0.0
     return
 
