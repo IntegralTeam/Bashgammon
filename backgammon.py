@@ -49,7 +49,6 @@ exitTerms = ("quit", "exit", "bye","q")
 
 def main(gameNumber=0, VERBOSE = True, SAVE_IMG = False, GAME_TYPE=None, QLEARN = False):    
     
-    GAME_TYPES = ['pvp', 'pvr', 'pvq', 'pvd', 'pvc', 'rvr', 'qvr', 'dvr', 'cvr']
     PLAYER_TYPES = {
         'pvp':{True: 'person', False:'person'}, 
         'pvr':{True: 'person', False:'random'}, 
@@ -59,8 +58,10 @@ def main(gameNumber=0, VERBOSE = True, SAVE_IMG = False, GAME_TYPE=None, QLEARN 
         'rvr':{True: 'random', False:'random'}, 
         'qvr':{True: 'qlearn', False:'random'},
         'dvr':{True: 'dlearn', False:'random'},
-        'cvr':{True: 'cnn',    False:'random'}
+        'cvr':{True: 'cnn',    False:'random'},
+        'cvc':{True: 'cnn',    False:'cnn'}
     }
+    GAME_TYPES = list(PLAYER_TYPES.keys())
     
     b = Board()   
     
